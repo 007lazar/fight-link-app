@@ -1,6 +1,6 @@
 import GymCard from "./GymCard";
 
-export default function GymList() {
+export default function GymGrid() { 
 
   return (
     <>

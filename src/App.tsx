@@ -1,7 +1,11 @@
-import GymList from "./components/GymList";
-import logo from "@/assets/Fight Link-logo/octagon-transperent-logo.png"
+import Card3d from "./components/home/Card3d";
+
+import logo from "@/assets/Fight Link-logo/octagon-transperent-logo.png";
 import { HiMenu } from "react-icons/hi";
 import { GoSearch } from "react-icons/go";
+
+import { Link, Route, Routes } from "react-router-dom";
+import GymsPage from "./pages/GymsPage";
 
 export default function App() {
   return (
@@ -12,10 +16,13 @@ export default function App() {
             <HiMenu size={30} />
           </button>
         </div>
-        <div className="navbar-center">
-          <a className="text-xl" href="/">
+        <div className="navbar-center gap-4">
+          <Link to="/gyms">
+            <button className="btn btn-link btn-ghost font-bold">Gyms</button>
+          </Link>
+          <Link className="text-xl" to="/">
             <img src={logo} className="w-40" alt="Logo" />
-          </a>
+          </Link>
         </div>
         <div className="navbar-end">
           <button className="btn btn-ghost btn-circle">
@@ -25,7 +32,17 @@ export default function App() {
       </div>
 
       <div className="item-container flex flex-wrap gap-5 justify-center">
-        <GymList />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Card3d />
+              </>
+            }
+          />
+          <Route path="/gyms" element={<GymsPage />} />
+        </Routes>
       </div>
     </>
   );

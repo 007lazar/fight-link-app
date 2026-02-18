@@ -17,7 +17,7 @@ export default function GymCard({ children, badges }: Props) {
           <h2 className="card-title">
             {children}
             {badges.map(b => (
-              <div className="badge badge-neutral">{b}</div>
+              <div key={b} className="badge badge-neutral">{b}</div>
             ))}
           </h2>
           <p>
