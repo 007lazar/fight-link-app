@@ -6,7 +6,7 @@ interface Props {
 export default function GymCard({ children, badges }: Props) {
   return (
     <>
-      <div className="card bg-base-100 w-96 shadow-sm">
+      <div className="card bg-base-100 shadow-sm">
         <figure>
           <img
             src="https://thedesignlove.com/wp-content/uploads/2024/05/ultimate-fighting-championship-logo-Today-1024x683.jpg"
