@@ -1,5 +1,6 @@
-import { HiMenu } from "react-icons/hi";
 import GymList from "./components/GymList";
+import logo from "@/assets/Fight Link-logo/octagon-transperent-logo.png"
+import { HiMenu } from "react-icons/hi";
 import { GoSearch } from "react-icons/go";
 
 export default function App() {
@@ -12,7 +13,9 @@ export default function App() {
           </button>
         </div>
         <div className="navbar-center">
-          <a className="btn btn-ghost text-xl">FightLink</a>
+          <a className="text-xl" href="/">
+            <img src={logo} className="w-40" alt="Logo" />
+          </a>
         </div>
         <div className="navbar-end">
           <button className="btn btn-ghost btn-circle">

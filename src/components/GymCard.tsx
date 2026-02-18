@@ -1,4 +1,9 @@
-export default function GymCard({ title }: { title: string }) {
+interface Props {
+  children: string;
+  badges: string[];
+}
+
+export default function GymCard({ children, badges }: Props) {
   return (
     <>
       <div className="card bg-base-100 w-96 shadow-sm">
@@ -10,15 +15,22 @@ export default function GymCard({ title }: { title: string }) {
         </figure>
         <div className="card-body">
           <h2 className="card-title">
-            {title}
-            <div className="badge badge-neutral">#MMA</div>
+            {children}
+            {badges.map(b => (
+              <div className="badge badge-neutral">{b}</div>
+            ))}
           </h2>
           <p>
             A card component has a figure, a body part, and inside body there
             are title and actions parts
           </p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-soft">View</button>
+          <div className="card-actions justify-center">
+            <button
+              className="btn btn-soft rounded-2xl w-80 tracking-[0.10rem]"
+              onClick={() => alert("This is " + children)}
+            >
+              Link Up!
+            </button>
           </div>
         </div>
       </div>
