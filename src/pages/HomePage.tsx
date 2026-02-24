@@ -1,11 +1,13 @@
-import Card3d from "@/components/home/Card3d"
-
+import Carousel from "@/components/home/Carousel";
+import Hero from "@/components/home/Hero";
 
 const HomePage = () => {
   return (
-    <div><Card3d /></div>
-    
-  )
-}
+    <>
+      <Carousel />
+      <Hero />
+    </>
+  );
+};
 
-export default HomePage
+export default HomePage;

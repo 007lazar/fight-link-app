@@ -1,3 +1,9 @@
-export default function EventsPage() {
-  return <div className="p-6">Events Page</div>;
-}
+import EventGrid from "@/components/events/EventGrid";
+
+const EventsPage = () => {
+  return (
+    <EventGrid />
+  );
+};
+
+export default EventsPage;

@@ -19,16 +19,27 @@ const Navbar = ({ theme, setTheme }: NavBarProps) => {
       className={[
         "navbar sticky top-0 z-50 mb-10",
         "backdrop-blur-md border-b border-base-content/10 shadow-sm",
-        darkMode
-          ? "bg-black/60 text-white"
-          : "bg-base-100/70 text-base-content",
+        darkMode ? "bg-black/60 text-white" : "bg-base-100/70 text-base-content",
         "transition-colors duration-300",
       ].join(" ")}
     >
       <div className="navbar-start">
-        <button className="btn btn-square btn-ghost">
-          <HiMenu size={30} />
-        </button>
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+            <HiMenu size={30} />
+          </div>
+          <ul
+            tabIndex={-1}
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+          >
+            <Link to="/">
+              <li>Home Page</li>
+            </Link>
+            <Link to="/about">
+              <li>About</li>
+            </Link>
+          </ul>
+        </div>
       </div>
       <div className="navbar-center gap-4">
         <Link to="/gyms">
@@ -40,6 +51,9 @@ const Navbar = ({ theme, setTheme }: NavBarProps) => {
             className="w-40 transition-transform duration-300 hover:scale-105"
             alt="Logo"
           />
+        </Link>
+        <Link to="/events">
+          <button className="btn btn-ghost hover:bg-transparent text-2xl font-bold">Events</button>
         </Link>
       </div>
       <div className="navbar-end">
