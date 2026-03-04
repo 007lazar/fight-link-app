@@ -2,7 +2,7 @@ import type { EventModel } from "@/models/event.model";
 
 export const events: EventModel[] = [
   {
-    id: "ufc-310",
+    slug: "ufc-310",
     title: "UFC 310: Jones vs Pereira",
     discipline: "MMA",
     city: "Las Vegas",
@@ -11,7 +11,7 @@ export const events: EventModel[] = [
   },
 
   {
-    id: "brave-92",
+    slug: "brave-92",
     title: "BRAVE CF 92",
     discipline: "MMA",
     city: "Belgrade",
@@ -20,7 +20,7 @@ export const events: EventModel[] = [
   },
 
   {
-    id: "glory-98",
+    slug: "glory-98",
     title: "GLORY 98",
     discipline: "Kickboxing",
     city: "Novi Sad",

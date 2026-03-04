@@ -6,7 +6,7 @@ const EventGrid = () => {
   return (
     <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
       {events.map(e => (
-        <Link key={e.id} to={`/events/${e.id}`} className="block">
+        <Link key={e.slug} to={`/events/${e.slug}`} className="block">
 					<EventCard
 						title={e.title}
 						discipline={e.discipline}

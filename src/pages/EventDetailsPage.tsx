@@ -2,9 +2,9 @@ import { useParams } from "react-router-dom";
 import { events } from "@/data/events.mock";
 
 const EventDetailsPage = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
 
-  const event = events.find((e) => e.id === id);
+  const event = events.find((e) => e.slug === slug);
 
   if (!event) return <div className="p-6">Event not found.</div>;
 
