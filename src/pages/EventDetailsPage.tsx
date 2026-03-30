@@ -1,8 +1,10 @@
+import { useFetchEvents } from "@/hooks/useFetchEvents";
 import { useParams } from "react-router-dom";
-import { events } from "@/data/events.mock";
+
 
 const EventDetailsPage = () => {
   const { slug } = useParams();
+  const events = useFetchEvents()
 
   const event = events.find((e) => e.slug === slug);
 

@@ -1,13 +1,18 @@
+import type { GymModel } from '@/models/gym.model';
+import axios from 'axios';
+
+const url = "http://localhost:3000/gyms";
+
 export async function fetchGyms() {
-    const res = await fetch("http://localhost:3000/gyms");
     
-    if (!res.ok) {
-        throw new Error("Failed to fetch gyms");
+    try {
+        const res = await axios.get<GymModel[]>(url);
+        return res.data;
+
+    }catch (error){
+        throw new Error(`Error: ${error}`);
     }
-
-    const data = await res.json(); 
-
-    return data;
+    
 }
 
 

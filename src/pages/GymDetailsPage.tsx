@@ -4,5 +4,5 @@ export default function GymDetailsPage() {
 
   const {slug} = useParams()
 
-  return <div className="p-6">Gym Details Page</div>;
+  return <div className="p-6">{slug}</div>;
 }
