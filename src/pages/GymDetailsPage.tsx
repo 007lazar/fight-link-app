@@ -1,3 +1,8 @@
+import { useParams } from "react-router-dom";
+
 export default function GymDetailsPage() {
-  return <div className="p-6">Gym Details Page</div>;
+
+  const {slug} = useParams()
+
+  return <div className="p-6">{slug}</div>;
 }

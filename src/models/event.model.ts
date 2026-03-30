@@ -1,5 +1,5 @@
 export interface EventModel {
-  id: string;
+  slug: string;
   title: string;
   discipline: string;
   city: string;

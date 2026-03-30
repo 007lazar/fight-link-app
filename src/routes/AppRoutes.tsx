@@ -13,9 +13,9 @@ const AppRoutes = () => {
         <Route path='/' element={<HomePage />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/events' element={<EventsPage />} />
-        <Route path='/events/:id' element={<EventDetailsPage />} />
+        <Route path='/events/:slug' element={<EventDetailsPage />} />
         <Route path='/gyms' element={<GymsPage />} />
-        <Route path='/gyms/:id' element={<GymDetailsPage />} />
+        <Route path='/gyms/:slug' element={<GymDetailsPage />} />
 
         <Route path='*' element={<Navigate to="/" replace />} />
     </Routes>
