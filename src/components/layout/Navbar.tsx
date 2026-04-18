@@ -54,7 +54,10 @@ const Navbar = ({ theme, setTheme }: NavBarProps) => {
           <button className="btn btn-ghost hover:bg-transparent text-2xl font-bold">Events</button>
         </Link>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end gap-4">
+        <Link to="/login">
+          <button className="btn btn-neutral">Signup</button>
+        </Link>
         <div className="theme-toggle flex flex-row items-center gap-2 mr-7">
           <label className="swap swap-rotate">
             {/* this hidden checkbox controls the state */}

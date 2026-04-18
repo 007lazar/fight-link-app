@@ -14,7 +14,7 @@ export function useFetchGyms(){
                 const data = await fetchGyms();
                 setGyms(data);
             }catch (error){
-                setError(`Error: ${error}`);
+                setError(`${error}`);
             }finally {
                 setIsLoading(false);
             }

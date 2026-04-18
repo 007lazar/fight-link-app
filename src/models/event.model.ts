@@ -6,5 +6,3 @@ export interface EventModel {
   date: string;
   poster: string;
 }
-
-

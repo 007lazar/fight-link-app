@@ -8,7 +8,7 @@ export default function GymsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-[400px]">
+      <div className="flex justify-center items-center min-h-100">
         <p className="text-gray-500 animate-pulse">Loading gyms...</p>
       </div>
     );

@@ -18,10 +18,7 @@ const EventCard = ({ title, discipline, city, date, poster }: EventCardProps) =>
         <p>📍 {city}</p>
         <p>
           📅{" "}
-          {date.toLocaleString("en-US", {
-            dateStyle: "medium",
-            timeStyle: "short",
-          })}
+          {date.toLocaleString()}
         </p>
       </div>
     </div>
