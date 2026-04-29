@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface EventCardProps {
   title: string;
   discipline: string;
@@ -9,19 +11,16 @@ interface EventCardProps {
 const EventCard = ({ title, discipline, city, date, poster }: EventCardProps) => {
   return (
     <div className="card bg-base-100 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-      <figure>
-        <img className="h-48 w-full object-cover" src={poster} alt={title} />
+      <figure className="relative h-48 w-full">
+        <Image src={poster} loading='eager' alt={title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
       </figure>
       <div className="card-body">
         <h2 className="card-title text-2xl">{title}</h2>
         <div className="badge badge-neutral">{discipline}</div>
         <p>📍 {city}</p>
         <p>
-          📅{" "}
-          {date.toLocaleString("en-US", {
-            dateStyle: "medium",
-            timeStyle: "short",
-          })}
+          📅{' '}
+          {date.toLocaleString()}
         </p>
       </div>
     </div>

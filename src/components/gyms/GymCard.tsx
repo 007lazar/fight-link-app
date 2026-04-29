@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface Props {
   name: string;
   description: string;
@@ -11,10 +13,10 @@ export default function GymCard({ name, description, poster, badges }: Props) {
       <div
         className="card bg-base-100 shadow-xl 
                       h-full hover:shadow-2xl hover:-translate-y-1 
-                      transition-all duration-300 cursor-pointer"
+                      transition-all duration-300 cursor-pointer rounded-2xl"
       >
-        <figure>
-          <img src={poster} alt="Club" />
+        <figure className="relative h-48 w-full">
+          <Image src={poster} loading='eager' alt={name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
         </figure>
         <div className="card-body">
           <h2 className="card-title justify-center font-extrabold">{name}</h2>
@@ -26,8 +28,8 @@ export default function GymCard({ name, description, poster, badges }: Props) {
             ))}
           </div>
           <p>{description}</p>
-          <div className="card-actions justify-center">
-            <button className="btn btn-soft rounded-2xl w-80 tracking-[0.10rem]">Link Up!</button>
+          <div className="card-actions justify-center mt-2">
+            <button className="btn btn-error rounded-2xl w-full max-w-xs tracking-[0.10rem]">Link Up!</button>
           </div>
         </div>
       </div>
