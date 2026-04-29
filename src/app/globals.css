@@ -1,7 +1,15 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake;
+  themes: false;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  --color-error: oklch(55% 0.25 29);
+  --er: oklch(55% 0.25 29);
 }
 
 @plugin "daisyui/theme" {
@@ -46,5 +54,3 @@
 [data-theme="dark"] {
   --page-bg: linear-gradient(to bottom right, #2a0b0b, #140b0b, #b3250a);
 }
-
-

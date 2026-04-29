@@ -8,6 +8,7 @@ const Carousel = () => {
           src="https://preview.redd.it/upcoming-events-v0-fkt12xrjnffg1.png?auto=webp&s=cc2bd52bfbcd063bd9f77176ab1f203c305ab3ed"
           fill
           sizes="100vw"
+          loading='eager'
           className="object-cover w-full"
           alt="Event slide 1"
           priority
@@ -27,6 +28,7 @@ const Carousel = () => {
           src="https://preview.redd.it/upcoming-events-v0-fkt12xrjnffg1.png?auto=webp&s=cc2bd52bfbcd063bd9f77176ab1f203c305ab3ed"
           fill
           sizes="100vw"
+          loading='eager'
           className="object-cover w-full"
           alt="Event slide 2"
         />

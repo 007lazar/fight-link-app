@@ -11,7 +11,7 @@ const Card3d = () => {
         <Image
           src={logo}
           alt="Fight Link 3D Card"
-          priority
+          loading='eager'
           className="object-contain"
         />
       </figure>

@@ -16,7 +16,7 @@ export default function GymCard({ name, description, poster, badges }: Props) {
                       transition-all duration-300 cursor-pointer rounded-2xl"
       >
         <figure className="relative h-48 w-full">
-          <Image src={poster} alt={name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
+          <Image src={poster} loading='eager' alt={name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
         </figure>
         <div className="card-body">
           <h2 className="card-title justify-center font-extrabold">{name}</h2>
