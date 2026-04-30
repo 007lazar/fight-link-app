@@ -6,8 +6,7 @@ import { HiMenu } from 'react-icons/hi';
 
 import type { UserSession } from '@/lib/auth';
 import { logoutAction } from '@/features/auth/actions/auth';
-import lightLogo from '@/assets/gpt_logo.png';
-import darkLogo from '@/assets/nanoBananaFightLink.png';
+
 
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
@@ -58,14 +57,14 @@ const Navbar = ({ user }: NavBarProps) => {
         <Link href="/gyms" className="hidden md:flex">
           <button className="btn btn-ghost hover:bg-transparent text-xl md:text-2xl font-bold">Gyms</button>
         </Link>
-        <Link className="relative w-36 h-11 md:w-52 md:h-14 flex-shrink-0" href="/">
+        <Link className="relative w-48 h-16 md:w-64 md:h-20" href="/">
           <Image
-            src={isDarkTheme ? darkLogo : lightLogo}
+            src="/V3_2.png"
             fill
             priority
-            sizes="(max-width: 768px) 144px, 208px"
+            sizes="(max-width: 768px) 192px, 256px"
             style={{ objectFit: 'contain', objectPosition: 'center' }}
-            className="transition-transform duration-300 hover:scale-105 drop-shadow-sm"
+            className="transition-transform duration-300 scale-125 hover:scale-135 drop-shadow-sm"
             alt="Fight Link Logo"
           />
         </Link>

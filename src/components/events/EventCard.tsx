@@ -10,7 +10,7 @@ interface EventCardProps {
 
 const EventCard = ({ title, discipline, city, date, poster }: EventCardProps) => {
   return (
-    <div className="card bg-base-100 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+    <div className="card rounded-2xl bg-base-100 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
       <figure className="relative h-48 w-full">
         <Image src={poster} loading='eager' alt={title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
       </figure>
