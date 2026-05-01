@@ -71,5 +71,5 @@ export async function registerAction(prevState: any, formData: FormData) {
 export async function logoutAction() {
   const cookieStore = await cookies();
   cookieStore.delete('token');
-  redirect('/login');
+  redirect('/');
 }

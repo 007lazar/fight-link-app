@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import logo from '../../../public/geminiFightLink.png';
+import logo from '../../../public/V3_2.png';
 
 const Card3d = () => {
   return (

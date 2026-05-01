@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 export type UserSession = {
   id: string;
   email: string;
-  role: 'USER' | 'ADMIN' | 'GYM_OWNER';
+  role: 'USER' | 'ADMIN' | 'GYM_OWNER' | 'ORGANIZER';
 } | null;
 
 export async function getUser(): Promise<UserSession> {

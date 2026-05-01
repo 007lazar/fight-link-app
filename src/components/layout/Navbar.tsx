@@ -57,14 +57,15 @@ const Navbar = ({ user }: NavBarProps) => {
         <Link href="/gyms" className="hidden md:flex">
           <button className="btn btn-ghost hover:bg-transparent text-xl md:text-2xl font-bold">Gyms</button>
         </Link>
-        <Link className="relative w-48 h-16 md:w-64 md:h-20" href="/">
+        <Link href="/" className="flex-shrink-0 flex items-center h-10 md:h-12">
           <Image
-            src="/V3_2.png"
-            fill
+            src="/FightLink_official_logo.png"
+            width={1536}
+            height={1024}
             priority
-            sizes="(max-width: 768px) 192px, 256px"
-            style={{ objectFit: 'contain', objectPosition: 'center' }}
-            className="transition-transform duration-300 scale-125 hover:scale-135 drop-shadow-sm"
+            sizes="(max-width: 768px) 60px, 72px"
+            style={{ height: '100%', width: 'auto' }}
+            className="object-contain drop-shadow-sm transition-transform duration-300 hover:scale-105"
             alt="Fight Link Logo"
           />
         </Link>
