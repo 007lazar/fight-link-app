@@ -12,7 +12,7 @@ type Props = {
 
 export function AppProviders({ children, user }: Props) {
   return (
-    <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem={false}>
+    <ThemeProvider attribute={['class', 'data-theme']} defaultTheme="dark" enableSystem={false}>
       <div className="min-h-screen transition-colors duration-300 text-base-content" style={{ background: 'var(--page-bg)' }}>
         <Navbar user={user} />
         <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>

@@ -24,7 +24,7 @@ async function apiFetch<T = unknown>(
     ...options,
     headers: {
       'Content-Type': 'application/json',
-      ...(token ? { Cookie: `token=${token}` } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...headers,
     },
     body: body !== undefined ? JSON.stringify(body) : undefined,

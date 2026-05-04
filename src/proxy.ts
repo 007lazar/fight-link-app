@@ -1,40 +1,49 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+type Payload = { sub?: string; email?: string; role?: string; exp?: number };
+
+function decodeToken(token: string | undefined): Payload | null {
+  if (!token) return null;
+  try {
+    const [, payloadBase64] = token.split('.');
+    if (!payloadBase64) return null;
+    const payload = JSON.parse(atob(payloadBase64)) as Payload;
+    if (payload.exp && Date.now() >= payload.exp * 1000) return null;
+    return payload;
+  } catch {
+    return null;
+  }
+}
+
 export default function proxy(request: NextRequest) {
-  const token = request.cookies.get('token')?.value;
+  const rawToken = request.cookies.get('token')?.value;
+  const payload = decodeToken(rawToken);
   const path = request.nextUrl.pathname;
 
-  const isProtected = path.startsWith('/dashboard') || path.startsWith('/admin');
+  const isProtected = path.startsWith('/profile') || path.startsWith('/admin');
   const isAuthPage = path.startsWith('/login') || path.startsWith('/register');
+  const staleCookie = !!rawToken && !payload;
 
-  if (isProtected && !token) {
-    return NextResponse.redirect(new URL('/login', request.url));
+  if (isProtected && !payload) {
+    const res = NextResponse.redirect(new URL('/login', request.url));
+    if (staleCookie) res.cookies.delete('token');
+    return res;
   }
 
-  if (isAuthPage && token) {
+  if (isAuthPage && payload) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
-  if (path.startsWith('/admin') && token) {
-    try {
-      const [, payloadBase64] = token.split('.');
-      if (!payloadBase64) throw new Error();
-
-      const payloadJson = atob(payloadBase64);
-      const payload = JSON.parse(payloadJson);
-
-      if (payload.role !== 'ADMIN') {
-        return NextResponse.redirect(new URL('/', request.url));
-      }
-    } catch {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
+  if (path.startsWith('/admin') && payload && payload.role !== 'ADMIN') {
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
-  return NextResponse.next();
+  const res = NextResponse.next();
+  if (staleCookie) res.cookies.delete('token');
+  return res;
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/admin/:path*', '/login', '/register'],
+  matcher: ['/profile/:path*', '/admin/:path*', '/login', '/register'],
 };

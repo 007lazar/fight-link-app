@@ -47,6 +47,11 @@ const Navbar = ({ user }: NavBarProps) => {
             <Link href="/events" className="md:hidden">
               <li>Events</li>
             </Link>
+            {user && (
+              <Link href="/profile" className="md:hidden">
+                <li>Profile</li>
+              </Link>
+            )}
             <Link href="/about">
               <li>About</li>
             </Link>
@@ -74,13 +79,18 @@ const Navbar = ({ user }: NavBarProps) => {
         </Link>
       </div>
       <div className="navbar-end gap-4">
+        {user && (
+          <Link href="/profile" className="hidden md:flex">
+            <button className="btn btn-ghost">{user.email}</button>
+          </Link>
+        )}
         {user ? (
           <form action={logoutAction}>
             <button className="btn btn-neutral" type="submit">Logout</button>
           </form>
         ) : (
           <Link href="/login">
-            <button className="btn btn-neutral">Signup</button>
+            <button className="btn btn-neutral">Login</button>
           </Link>
         )}
         <div className="theme-toggle flex flex-row items-center gap-2 mr-7">
