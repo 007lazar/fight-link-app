@@ -47,3 +47,25 @@ export async function rejectMemberAction(gymSlug: string, userId: string): Promi
     return { error: 'Something went wrong' };
   }
 }
+
+export async function promoteMemberAction(gymSlug: string, userId: string): Promise<{ error?: string }> {
+  try {
+    await api.patch(`/gyms/${gymSlug}/members/${userId}`, { role: 'TRAINER' });
+    revalidatePath(`/profile/gyms/${gymSlug}/members`);
+    return {};
+  } catch (e) {
+    if (e instanceof ApiError) return { error: e.message };
+    return { error: 'Something went wrong' };
+  }
+}
+
+export async function demoteMemberAction(gymSlug: string, userId: string): Promise<{ error?: string }> {
+  try {
+    await api.patch(`/gyms/${gymSlug}/members/${userId}`, { role: 'MEMBER' });
+    revalidatePath(`/profile/gyms/${gymSlug}/members`);
+    return {};
+  } catch (e) {
+    if (e instanceof ApiError) return { error: e.message };
+    return { error: 'Something went wrong' };
+  }
+}

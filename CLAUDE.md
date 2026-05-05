@@ -79,20 +79,19 @@ Proxy enforces logged-in/logged-out redirects and the ADMIN check on `/admin/*`.
 
 ---
 
-## Current State (as of 2026-05-03)
+## Current State (as of 2026-05-05)
 
 ### Phase 1 ✅
 Auth, layout, base routing, navbar, login/register flows.
 
-### Phase 2 — Frontend In Progress
+### Phase 2 ✅
+All Phase 2 pages and infrastructure are built on branch `feature/ui-pages`:
 
-Pages to build, in priority order:
-
-1. **`lib/api.ts`** — centralized fetch wrapper (base URL, auth header forwarding, JSON parsing, error normalization). See spec below.
-2. **Gym profile page** (`/gyms/[slug]`) — full info, join/leave button, membership status, member count, media gallery.
-3. **Event detail page** (`/events/[slug]`) — full brief, register/cancel button, capacity indicator.
-4. **User dashboard** (`/dashboard`) — my gyms, my upcoming events, my pending memberships.
-5. **Gym owner dashboard** (`/dashboard/gyms/manage`) — pending member requests, approve/reject, upgrade to TRAINER, edit gym.
+- **`lib/api.ts`** — centralized fetch wrapper exists. Reads `token` cookie, forwards as `Authorization: Bearer` header.
+- **Gym profile page** (`/gyms/[slug]`) — join/leave, membership status.
+- **Event detail page** (`/events/[slug]`) — register/cancel button.
+- **User dashboard** (`/profile`) — my gyms, my events, my memberships, my gym ownership.
+- **Gym owner dashboard** — pending member requests, approve/reject (`PATCH /gyms/:slug/members/:userId`).
 
 All new pages use shadcn/ui. No new DaisyUI.
 
@@ -118,7 +117,7 @@ All new pages use shadcn/ui. No new DaisyUI.
 
 ---
 
-## `lib/api.ts` Spec (To Build)
+## `lib/api.ts` Spec (Built — see `src/lib/api.ts`)
 
 A single wrapper used by all server-side calls (Server Components, Server Actions). Reads the cookie, forwards as Bearer header, normalizes errors.
 

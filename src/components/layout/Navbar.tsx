@@ -64,7 +64,7 @@ const Navbar = ({ user }: NavBarProps) => {
         </Link>
         <Link href="/" className="flex-shrink-0 flex items-center h-10 md:h-12">
           <Image
-            src="/FightLink_official_logo.png"
+            src="/fight_link_navbar.png"
             width={1536}
             height={1024}
             priority

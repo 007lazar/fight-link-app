@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
-import { MapPin, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { MapPin, ArrowLeft, ShieldCheck, Users } from 'lucide-react';
 
 import { getUser } from '@/lib/auth';
 import { api } from '@/lib/api';
@@ -81,6 +81,12 @@ export default async function OwnerDashboardPage() {
                         <MapPin className="size-3" />{gym.city}
                       </span>
                     )}
+                    <Link
+                      href={`/profile/gyms/${gym.slug}/members`}
+                      className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1 mt-1 w-fit"
+                    >
+                      <Users className="size-3" />Members
+                    </Link>
                   </div>
                 </div>
               </Card>

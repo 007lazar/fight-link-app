@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-const BASE = process.env.API_URL ?? 'http://localhost:3001';
+const BASE = process.env.API_URL ?? 'http://localhost:4000';
 
 type FetchOptions = Omit<RequestInit, 'body'> & { body?: unknown };
 
@@ -32,6 +33,10 @@ async function apiFetch<T = unknown>(
   });
 
   if (!res.ok) {
+    if (res.status === 401) {
+      cookieStore.delete('token');
+      redirect('/login');
+    }
     const err = await res.json().catch(() => ({}));
     const message = Array.isArray(err.message)
       ? err.message.join(', ')
