@@ -8,7 +8,10 @@ function decodeToken(token: string | undefined): Payload | null {
   try {
     const [, payloadBase64] = token.split('.');
     if (!payloadBase64) return null;
-    const payload = JSON.parse(atob(payloadBase64)) as Payload;
+    // JWT uses base64url: `-`→`+`, `_`→`/`, no padding — normalize for atob()
+    const padding = '='.repeat((4 - (payloadBase64.length % 4)) % 4);
+    const base64 = (payloadBase64 + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const payload = JSON.parse(atob(base64)) as Payload;
     if (payload.exp && Date.now() >= payload.exp * 1000) return null;
     return payload;
   } catch {
@@ -35,7 +38,7 @@ export default function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
-  if (path.startsWith('/admin') && payload && payload.role !== 'ADMIN') {
+  if (path.startsWith('/admin') && payload?.role !== 'ADMIN') {
     return NextResponse.redirect(new URL('/', request.url));
   }
 

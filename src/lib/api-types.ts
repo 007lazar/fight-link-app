@@ -569,10 +569,16 @@ export interface components {
             password: string;
             /** @example Marko Petrovic */
             name: string;
+            /**
+             * @description Self-assignable roles only. ORGANIZER and ADMIN are admin-assigned.
+             * @example GYM_OWNER
+             * @enum {string}
+             */
+            role?: "USER" | "GYM_OWNER";
         };
         AuthTokenResponseDto: {
             /** @example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... */
-            token: string;
+            access_token: string;
         };
         LoginDto: {
             /** @example fighter@example.com */
