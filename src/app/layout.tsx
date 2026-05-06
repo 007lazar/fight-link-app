@@ -4,6 +4,7 @@ import { AppProviders } from '@/providers/AppProviders';
 import { getUser } from '@/lib/auth';
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -24,6 +25,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
       <body>
         <AppProviders user={user}>{children}</AppProviders>
+        <Toaster richColors closeButton />
       </body>
     </html>
   );
