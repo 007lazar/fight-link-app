@@ -15,10 +15,14 @@ export async function getUser(): Promise<UserSession> {
   try {
     const [, payloadBase64] = token.split('.');
     if (!payloadBase64) return null;
-    
-    const payloadJson = atob(payloadBase64);
+
+    // JWT uses base64url encoding: `-` instead of `+`, `_` instead of `/`,
+    // and no `=` padding. atob() requires standard base64, so we normalize.
+    const padding = '='.repeat((4 - (payloadBase64.length % 4)) % 4);
+    const base64 = (payloadBase64 + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const payloadJson = atob(base64);
     const payload = JSON.parse(payloadJson);
-    
+
     if (payload.exp && Date.now() >= payload.exp * 1000) {
       return null;
     }
@@ -28,7 +32,7 @@ export async function getUser(): Promise<UserSession> {
       email: payload.email,
       role: payload.role,
     };
-  } catch (e) {
+  } catch {
     return null;
   }
 }

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
-import { MapPin, ArrowLeft, ShieldCheck, Users } from 'lucide-react';
+import { MapPin, ArrowLeft, ShieldCheck, Users, Plus } from 'lucide-react';
 
 import { getUser } from '@/lib/auth';
 import { api } from '@/lib/api';
@@ -43,10 +43,16 @@ export default async function OwnerDashboardPage() {
           <h1 className="text-3xl font-bold tracking-tight">Your gyms</h1>
           <p className="text-muted-foreground text-sm mt-1">{gyms.length} gym{gyms.length !== 1 ? 's' : ''}</p>
         </div>
-        <Link href="/profile" className={buttonVariants({ size: 'sm', variant: 'ghost' })}>
-          <ArrowLeft className="size-4" />
-          Profile
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link href="/profile/gyms/create" className={buttonVariants({ size: 'sm' })}>
+            <Plus className="size-4" />
+            New gym
+          </Link>
+          <Link href="/profile" className={buttonVariants({ size: 'sm', variant: 'ghost' })}>
+            <ArrowLeft className="size-4" />
+            Profile
+          </Link>
+        </div>
       </div>
 
       <Separator />

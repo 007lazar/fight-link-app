@@ -32,7 +32,7 @@ const Navbar = ({ user }: NavBarProps) => {
     <>
       <nav className="sticky top-0 z-40 border-b border-border/50 bg-background/80 backdrop-blur-md">
         {/* 3-column grid: logo | center nav | right actions */}
-        <div className="mx-auto grid max-w-6xl grid-cols-3 items-center px-4 h-16">
+        <div className="mx-auto flex items-center justify-between px-4 h-16 md:grid md:grid-cols-3">
 
           {/* Col 1: Logo — always left */}
           <div className="flex items-center">
@@ -65,7 +65,7 @@ const Navbar = ({ user }: NavBarProps) => {
             {user && (
               <Link
                 href="/profile"
-                className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'hidden md:inline-flex max-w-[160px] truncate')}
+                className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'hidden md:inline-flex max-w-40 truncate')}
               >
                 {user.email}
               </Link>

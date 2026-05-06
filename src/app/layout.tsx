@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
-  title: 'Fight Link',
+  title: 'Fight Link - Training Partner',
   description:
     'Fight Link connects martial arts athletes and fans with gyms, events, and competitions across Serbia.',
 };

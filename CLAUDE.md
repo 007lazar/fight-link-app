@@ -4,6 +4,13 @@ This file is the source of truth for frontend engineering decisions. Read fully 
 
 ---
 
+## Collaboration Rules (Always Active)
+
+1. **Always ask when unclear.** If any requirement, constraint, or prompt is ambiguous, ask before writing code. A clarifying question costs 30 seconds; a wrong implementation costs hours. Do not guess.
+2. **Senior architect + teaching mindset.** Operate as a master senior business and software architect. The founder is a graduate software engineer learning proper coding and system design in 2026. Every non-trivial decision must be explained — not just *what* was done, but *why*, what the alternatives were, and what trade-off was made. Patterns, reasoning, and architectural choices should be made visible, not buried.
+
+---
+
 ## Working Session Perspective
 
 Operate as a **senior frontend engineer with product instinct**:
@@ -25,6 +32,7 @@ Operate as a **senior frontend engineer with product instinct**:
 | State | React Context (`AuthContext`) — minimal, only for auth |
 | Data fetching | Server Components + Server Actions (preferred); fetch-based `lib/api.ts` for client components |
 | Icons | `lucide-react` (with shadcn) |
+| Types | Auto-generated from backend OpenAPI spec via `npm run gen:types` → `src/lib/api-types.ts` |
 
 ---
 
@@ -63,6 +71,14 @@ Operate as a **senior frontend engineer with product instinct**:
 - Display-only on the frontend. Never derived or modified client-side.
 - A duplicate-name 409 from the backend means: show the user a clear error and let them pick a different name.
 
+### TypeScript Types — Single Source of Truth
+
+- **Never hand-write types that mirror the API.** Types come from the backend OpenAPI spec.
+- **Workflow:** start the backend → run `npm run gen:types` on the frontend → `src/lib/api-types.ts` is regenerated.
+- The generated file is committed to git (so CI doesn't need the backend running to build), but is treated as read-only. Do not edit it manually.
+- After any backend DTO or response shape changes, regenerate types and update any downstream imports.
+- `src/features/*/types/index.ts` files are legacy — do not add new types there. New types come from `src/lib/api-types.ts`.
+
 ---
 
 ## Roles & Routing
@@ -79,23 +95,31 @@ Proxy enforces logged-in/logged-out redirects and the ADMIN check on `/admin/*`.
 
 ---
 
-## Current State (as of 2026-05-05)
+## Current State (as of 2026-05-06)
 
 ### Phase 1 ✅
 Auth, layout, base routing, navbar, login/register flows.
 
 ### Phase 2 ✅
-All Phase 2 pages and infrastructure are built on branch `feature/ui-pages`:
 
-- **`lib/api.ts`** — centralized fetch wrapper exists. Reads `token` cookie, forwards as `Authorization: Bearer` header.
+- **`lib/api.ts`** — centralized fetch wrapper. Reads `token` cookie, forwards as `Authorization: Bearer` header.
 - **Gym profile page** (`/gyms/[slug]`) — join/leave, membership status.
 - **Event detail page** (`/events/[slug]`) — register/cancel button.
 - **User dashboard** (`/profile`) — my gyms, my events, my memberships, my gym ownership.
 - **Gym owner dashboard** — pending member requests, approve/reject (`PATCH /gyms/:slug/members/:userId`).
+- **Navbar** — mobile-responsive flex layout (fixed right-padding bug 2026-05-06).
 
-All new pages use shadcn/ui. No new DaisyUI.
+All pages use shadcn/ui. No new DaisyUI.
 
-### Phase 3 Frontend — Upcoming
+### Phase 3 — In Progress
+
+Completed so far:
+- ✅ **OpenAPI type generation** — `npm run gen:types` fetches `/docs-json` from the running backend and outputs `src/lib/api-types.ts`. This is the single source of truth for API types.
+- ✅ **Create Gym page** — `src/app/profile/gyms/create/` — two-column desktop (form + live preview), single-column mobile. Badge chip input. `createGymAction` server action.
+- ✅ **Create Event page** — `src/app/profile/events/create/` — discipline Select (Phase 3 vocabulary), gym selector, datetime fields. `createEventAction` server action.
+- ✅ **Discipline constants** — `src/features/events/constants/disciplines.ts` — single source for all discipline values; matches planned backend enum.
+
+### Phase 3 Frontend — Remaining
 
 > **Two co-equal tracks** per `STRATEGY.md` Decision Log 2026-05-03 (two-pillar MVP repositioning). Both pillars must ship before public launch — discovery without ops is a static directory, ops without discovery has no inbound demand.
 
@@ -119,47 +143,18 @@ All new pages use shadcn/ui. No new DaisyUI.
 
 ## `lib/api.ts` Spec (Built — see `src/lib/api.ts`)
 
-A single wrapper used by all server-side calls (Server Components, Server Actions). Reads the cookie, forwards as Bearer header, normalizes errors.
+A single wrapper used by all server-side calls (Server Components, Server Actions). Reads the `token` cookie, forwards as `Authorization: Bearer`, normalizes errors. Handles 401 by deleting the cookie and redirecting to `/login`.
 
 ```ts
-// src/lib/api.ts
-import { cookies } from 'next/headers';
-
-const API_URL = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL!;
-
-type FetchOpts = Omit<RequestInit, 'body'> & { json?: unknown };
+export const api = {
+  get:    <T>(path: string, opts?: FetchOptions) => apiFetch<T>(path, { method: 'GET', ...opts }),
+  post:   <T>(path: string, body?: unknown, opts?: FetchOptions) => apiFetch<T>(path, { method: 'POST', body, ...opts }),
+  patch:  <T>(path: string, body?: unknown, opts?: FetchOptions) => apiFetch<T>(path, { method: 'PATCH', body, ...opts }),
+  delete: <T>(path: string, opts?: FetchOptions) => apiFetch<T>(path, { method: 'DELETE', ...opts }),
+};
 
 export class ApiError extends Error {
-  constructor(public status: number, message: string) {
-    super(message);
-  }
-}
-
-export async function api<T = unknown>(path: string, opts: FetchOpts = {}): Promise<T> {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
-
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...opts.headers,
-  };
-
-  const res = await fetch(`${API_URL}${path}`, {
-    ...opts,
-    headers,
-    body: opts.json !== undefined ? JSON.stringify(opts.json) : undefined,
-    cache: opts.cache ?? 'no-store',
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new ApiError(
-      res.status,
-      Array.isArray(err.message) ? err.message.join(', ') : err.message ?? 'Request failed',
-    );
-  }
-  return res.status === 204 ? (undefined as T) : ((await res.json()) as T);
+  constructor(message: string, public status: number) { super(message); }
 }
 ```
 
@@ -167,13 +162,16 @@ Usage:
 
 ```ts
 // Server Component
-const gyms = await api<Gym[]>('/gyms');
+const gyms = await api.get<GymModel[]>('/gyms');
 
 // Server Action
-await api('/gyms', { method: 'POST', json: { name, description } });
+const gym = await api.post<{ slug: string }>('/gyms', { name, description });
+
+// PATCH
+await api.patch(`/gyms/${slug}/members/${userId}`, { role: 'TRAINER' });
 ```
 
-For client components: expose a Next.js Route Handler (`/api/proxy/...`) that internally calls `api()`. Client never talks directly to the backend.
+For client components: expose a Next.js Route Handler (`/api/proxy/...`) that internally calls `api`. Client never talks directly to the backend.
 
 ---
 

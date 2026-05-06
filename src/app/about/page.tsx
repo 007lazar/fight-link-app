@@ -6,7 +6,6 @@ export default function AboutPage() {
         <video
           autoPlay
           loop
-          muted
           playsInline
           className="w-full h-auto"
         >

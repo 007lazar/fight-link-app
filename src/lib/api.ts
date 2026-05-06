@@ -34,9 +34,14 @@ async function apiFetch<T = unknown>(
 
   if (!res.ok) {
     if (res.status === 401) {
-      cookieStore.delete('token');
+      // Redirect to login. Cookie deletion is intentionally NOT done here
+      // because cookies() is read-only in Server Components — mutation is
+      // only allowed in Server Actions and Route Handlers. The expired/invalid
+      // token will be naturally cleared when the user logs in again or via
+      // getUser() detecting expiry in auth.ts.
       redirect('/login');
     }
+
     const err = await res.json().catch(() => ({}));
     const message = Array.isArray(err.message)
       ? err.message.join(', ')

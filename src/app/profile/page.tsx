@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
-import { Calendar, MapPin, Settings } from 'lucide-react';
+import { Calendar, MapPin, Settings, Plus } from 'lucide-react';
 
 import { getUser } from '@/lib/auth';
 import { api } from '@/lib/api';
@@ -54,6 +54,12 @@ export default async function DashboardPage() {
             <Link href="/profile/gyms" className={buttonVariants({ size: 'sm', variant: 'outline' })}>
               <Settings className="size-4" />
               Your gyms
+            </Link>
+          )}
+          {(user.role === 'ORGANIZER' || user.role === 'ADMIN') && (
+            <Link href="/profile/events/create" className={buttonVariants({ size: 'sm', variant: 'outline' })}>
+              <Plus className="size-4" />
+              New event
             </Link>
           )}
         </div>
