@@ -2,7 +2,7 @@ export default function AboutPage() {
   return (
     <>
 
-      <div className="w-full rounded-2xl overflow-hidden shadow-xl border border-base-300">
+      <div className="w-full rounded-2xl overflow-hidden shadow-xl border border-border">
         <video
           autoPlay
           loop

@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   name: string;
@@ -31,14 +30,9 @@ export default function GymCard({ name, description, poster, badges }: Props) {
           ))}
         </div>
         <p className="text-sm text-muted-foreground">{description}</p>
-        <button
-          className={cn(
-            buttonVariants({ variant: 'destructive' }),
-            'mt-2 w-full max-w-xs self-center rounded-2xl tracking-[0.10rem]',
-          )}
-        >
+        <Button variant="destructive" className="mt-2 w-full max-w-xs self-center rounded-2xl tracking-[0.10rem]">
           Link Up!
-        </button>
+        </Button>
       </div>
     </div>
   );

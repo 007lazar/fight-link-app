@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Carousel = () => {
   return (
@@ -14,18 +16,12 @@ const Carousel = () => {
           priority
         />
         <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 justify-between">
-          <a
-            href="#slide2"
-            className="inline-flex size-10 items-center justify-center rounded-full bg-background/80 text-foreground transition-colors hover:bg-background"
-          >
-            ❮
-          </a>
-          <a
-            href="#slide2"
-            className="inline-flex size-10 items-center justify-center rounded-full bg-background/80 text-foreground transition-colors hover:bg-background"
-          >
-            ❯
-          </a>
+          <Button variant="ghost" size="icon" className="rounded-full bg-background/80 hover:bg-background" asChild>
+            <a href="#slide2" aria-label="Previous slide"><ChevronLeft className="size-5" /></a>
+          </Button>
+          <Button variant="ghost" size="icon" className="rounded-full bg-background/80 hover:bg-background" asChild>
+            <a href="#slide2" aria-label="Next slide"><ChevronRight className="size-5" /></a>
+          </Button>
         </div>
       </div>
 
@@ -39,18 +35,12 @@ const Carousel = () => {
           alt="Event slide 2"
         />
         <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 justify-between">
-          <a
-            href="#slide1"
-            className="inline-flex size-10 items-center justify-center rounded-full bg-background/80 text-foreground transition-colors hover:bg-background"
-          >
-            ❮
-          </a>
-          <a
-            href="#slide1"
-            className="inline-flex size-10 items-center justify-center rounded-full bg-background/80 text-foreground transition-colors hover:bg-background"
-          >
-            ❯
-          </a>
+          <Button variant="ghost" size="icon" className="rounded-full bg-background/80 hover:bg-background" asChild>
+            <a href="#slide1" aria-label="Previous slide"><ChevronLeft className="size-5" /></a>
+          </Button>
+          <Button variant="ghost" size="icon" className="rounded-full bg-background/80 hover:bg-background" asChild>
+            <a href="#slide1" aria-label="Next slide"><ChevronRight className="size-5" /></a>
+          </Button>
         </div>
       </div>
     </div>
