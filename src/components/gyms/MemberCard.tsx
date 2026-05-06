@@ -37,8 +37,8 @@ export function MemberCard({ gymSlug, userId, name, email, role, joinedAt, isPen
   }
 
   return (
-    <Card size="sm">
-      <CardContent className="flex flex-col gap-2 py-3">
+    <Card>
+      <CardContent className="flex flex-col gap-2 p-3">
         <div className="flex items-center justify-between gap-4">
           <div className="min-w-0">
             <p className="font-medium text-sm truncate">{name}</p>
@@ -49,18 +49,18 @@ export function MemberCard({ gymSlug, userId, name, email, role, joinedAt, isPen
           </div>
           <div className="flex items-center gap-2 shrink-0">
             {isPending ? (
-              <Badge variant="secondary">Pending</Badge>
+              <Badge variant="warning">Pending</Badge>
             ) : (
               <>
                 <Badge variant={role === 'TRAINER' ? 'default' : 'outline'}>
                   {role === 'TRAINER' ? 'Trainer' : 'Member'}
                 </Badge>
                 {role === 'MEMBER' ? (
-                  <Button size="xs" variant="outline" disabled={transitioning} onClick={handlePromote}>
+                  <Button size="sm" variant="outline" disabled={transitioning} onClick={handlePromote}>
                     Make trainer
                   </Button>
                 ) : (
-                  <Button size="xs" variant="outline" disabled={transitioning} onClick={handleDemote}>
+                  <Button size="sm" variant="outline" disabled={transitioning} onClick={handleDemote}>
                     Demote
                   </Button>
                 )}

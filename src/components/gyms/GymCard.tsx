@@ -1,4 +1,7 @@
 import Image from 'next/image';
+import { Badge } from '@/components/ui/badge';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface Props {
   name: string;
@@ -9,30 +12,34 @@ interface Props {
 
 export default function GymCard({ name, description, poster, badges }: Props) {
   return (
-    <>
-      <div
-        className="card bg-base-100 shadow-xl 
-                      h-full hover:shadow-2xl hover:-translate-y-1 
-                      transition-all duration-300 cursor-pointer rounded-2xl"
-      >
-        <figure className="relative h-48 w-full">
-          <Image src={poster} loading='eager' alt={name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title justify-center font-extrabold">{name}</h2>
-          <div className="flex justify-around">
-            {badges.map((b) => (
-              <div key={b} className="badge badge-neutral">
-                {`#${b}`}
-              </div>
-            ))}
-          </div>
-          <p>{description}</p>
-          <div className="card-actions justify-center mt-2">
-            <button className="btn btn-error rounded-2xl w-full max-w-xs tracking-[0.10rem]">Link Up!</button>
-          </div>
+    <div className="h-full cursor-pointer overflow-hidden rounded-2xl bg-card ring-1 ring-foreground/10 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+      <figure className="relative h-48 w-full">
+        <Image
+          src={poster}
+          loading="eager"
+          alt={name}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover"
+        />
+      </figure>
+      <div className="flex flex-col gap-3 p-4">
+        <h2 className="text-center font-extrabold">{name}</h2>
+        <div className="flex flex-wrap justify-around gap-2">
+          {badges.map((b) => (
+            <Badge key={b} variant="outline">{`#${b}`}</Badge>
+          ))}
         </div>
+        <p className="text-sm text-muted-foreground">{description}</p>
+        <button
+          className={cn(
+            buttonVariants({ variant: 'destructive' }),
+            'mt-2 w-full max-w-xs self-center rounded-2xl tracking-[0.10rem]',
+          )}
+        >
+          Link Up!
+        </button>
       </div>
-    </>
+    </div>
   );
 }

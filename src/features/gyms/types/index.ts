@@ -13,3 +13,8 @@ export interface GymModel {
   requiresApproval: boolean;
   ownerId: string;
 }
+
+export interface MyMembership {
+  status: 'PENDING' | 'APPROVED' | 'REJECTED';
+  gym: { slug: string };
+}

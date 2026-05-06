@@ -12,7 +12,7 @@ export default async function GymsPage() {
   const gyms = await getGyms();
 
   if (gyms.length === 0) {
-    return <p className="text-center py-10 text-base-content/60">No gyms found nearby.</p>;
+    return <p className="text-center py-10 text-muted-foreground">No gyms found nearby.</p>;
   }
 
   return (

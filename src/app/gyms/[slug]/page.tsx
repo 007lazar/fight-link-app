@@ -12,11 +12,8 @@ import { buttonVariants } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { GymJoinButton } from '@/components/gyms/GymJoinButton';
+import {MyMembership} from "@/features/gyms/types";
 
-interface MyMembership {
-  status: 'PENDING' | 'APPROVED' | 'REJECTED';
-  gym: { slug: string };
-}
 
 async function getGym(slug: string): Promise<GymModel> {
   try {

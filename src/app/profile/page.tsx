@@ -108,8 +108,8 @@ export default async function DashboardPage() {
           <div className="space-y-2">
             <p className="text-sm text-muted-foreground font-medium">Pending approval</p>
             {pendingGyms.map(({ gym }) => (
-              <Card key={gym.slug} size="sm">
-                <CardContent className="flex items-center justify-between gap-4 py-3">
+              <Card key={gym.slug}>
+                <CardContent className="flex items-center justify-between gap-4 p-3">
                   <Link href={`/gyms/${gym.slug}`} className="font-medium text-sm hover:underline truncate">
                     {gym.name}
                   </Link>
@@ -141,8 +141,8 @@ export default async function DashboardPage() {
         {upcomingEvents.length > 0 && (
           <div className="space-y-3">
             {upcomingEvents.map(({ event }) => (
-              <Card key={event.slug} size="sm">
-                <CardContent className="flex items-center gap-4 py-3">
+              <Card key={event.slug}>
+                <CardContent className="flex items-center gap-4 p-3">
                   <Calendar className="size-5 text-muted-foreground shrink-0" />
                   <div className="flex-1 min-w-0">
                     <Link href={`/events/${event.slug}`} className="font-medium hover:underline block truncate">
